@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+
+    <process id="my-process">
+
+        <startEvent id="startEvent" name="startEvent"/>
+        <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="commonTask"/>
+
+        <userTask id="commonTask" name="Common Task"/>
+        <sequenceFlow id="flow2" sourceRef="commonTask" targetRef="end1"/>
+        <boundaryEvent attachedToRef="commonTask"
+                       id="boundaryEvent" name="Timer" cancelActivity="true">
+            <timerEventDefinition>
+                <timeDuration>PT5S</timeDuration>
+            </timerEventDefinition>
+        </boundaryEvent>
+        <sequenceFlow id="flow3" sourceRef="boundaryEvent" targetRef="timeoutTask"/>
+        <userTask id="timeoutTask" name="TimeoutTask"/>
+        <sequenceFlow id="flow4" sourceRef="timeoutTask" targetRef="end2"/>
+        <endEvent id="end1"/>
+        <endEvent id="end2"/>
+    </process>
+
+</definitions>
